@@ -1,2 +1,3 @@
 # etc
-All odds, etcs codes stores here
+All odds, etcs codes goes here... 
+Stay Calm and Contribute :)
