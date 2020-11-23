@@ -1,26 +1,27 @@
-import random
+import random, logging
 import numpy as np
 import matplotlib.pyplot as pl
 from operator import itemgetter
-from time import sleep 
+from time import sleep
 import pygame
 def drawSquare(screen, currentColour, currentColumn, cellSize, currentRow):
-    pygame.draw.rect(screen, currentColour, [currentColumn * cellSize, currentRow * cellSize, (currentColumn + 1)
-                                             * cellSize, (currentRow + 1) * cellSize])
+    pygame.draw.rect(screen, currentColour, [currentColumn * cellSize, currentRow * cellSize,
+                    (currentColumn + 1)* cellSize, (currentRow + 1) * cellSize])
 
 ''' Print the current generation '''
-def printGenerationUniverse(universeList,currentTimeStep, cellCountX, cellCountY, normalCharacter, susceptibleCharacter, infectedCharacter, recoveredCharacter):
-    print("TimeStep %3i:  " %currentTimeStep)
+def printGenerationUniverse(universeList, currentTimeStep, cellCountX, cellCountY, normalCharacter,
+                            susceptibleCharacter, infectedCharacter, recoveredCharacter):
+    logging.info("TimeStep %3i:  " %currentTimeStep)
     rowLabel = "  "
     for l in range(cellCountX):
         rowLabel += str(l) +" "
-    print(rowLabel)
+    logging.info(rowLabel)
     for currentRow in range(cellCountY):
-        print ("%s %s" %(currentRow, universeList[currentRow].replace('0',normalCharacter+" ")
+        logging.info ("%s %s" %(currentRow, universeList[currentRow].replace('0',normalCharacter+" ")
                .replace('1', susceptibleCharacter + " ")
                .replace('2', infectedCharacter + " ").replace('3', recoveredCharacter + " "))
               )
-    return 
+    return
 ''' This method calculates the new state of the cell based on Van Neumann neighborhood '''
 def getNewState2D(currentRowNeighbours, upperRowNeighbours, lowerRowNeighbours,beta,gamma):
     newState = '1'
@@ -64,7 +65,7 @@ def getNewState2D(currentRowNeighbours, upperRowNeighbours, lowerRowNeighbours,b
 
 
 def screenplay(titile,cellCountX, cellCountY, info, total_iteration):
-    #print(total_iteration)    
+    #print(total_iteration)
     pygame.init()
     #colour code in RGB Combination
     BLACK = (0,0,0)
@@ -101,13 +102,13 @@ def screenplay(titile,cellCountX, cellCountY, info, total_iteration):
     #for Step in range(total_iteration):
     Step = 0
     while mainloop:
-        milliseconds = clock.tick(FPS)  
-        seconds = milliseconds / 1000.0 
+        milliseconds = clock.tick(FPS)
+        seconds = milliseconds / 1000.0
         playtime += seconds
         cycletime += seconds
-        for event in pygame.event.get(): 
-            if event.type == pygame.QUIT: 
-                mainloop=False 
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                mainloop=False
         #print(cycletime,seconds,cycletime>seconds)
         if cycletime > interval:
 
@@ -184,7 +185,7 @@ print(' Recovered in DARK-GRAY Pixel '.center(80,'-'))
 print()
 #uncomment for random initialization
 S=int(input('Discription\n [1] Infected spaced Center\n [2] Infected spaced Randomly\n [Choose 1 or 2] : '))
-if S==2: 
+if S==2:
     print('Printing Initial state'.center(80,'-'))
     # Randomise first state
     for currentColumn in range(cellCountY):
